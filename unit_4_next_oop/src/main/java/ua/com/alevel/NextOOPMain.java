@@ -11,5 +11,10 @@ public class NextOOPMain {
         //base_entity -> student ---
         StudentController studentController = new StudentController();
         studentController.start();
+
+//        Test test = new Test();
+//        test.s = "gssgs";
+//
+//        Test.s1 = "gagasgsa";
     }
 }

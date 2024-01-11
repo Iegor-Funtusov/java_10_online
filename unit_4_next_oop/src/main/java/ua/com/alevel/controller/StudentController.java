@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 
 public class StudentController {
 
-    private StudentService studentService = new StudentService();
+    private final StudentService studentService = new StudentService();
 
     public void start() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

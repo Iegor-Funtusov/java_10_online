@@ -2,7 +2,7 @@ package ua.com.alevel.db;
 
 import ua.com.alevel.entity.Student;
 
-public class DbStudent {
+public class DbStudent implements StudentStorage {
 
     private Student[] students = new Student[10];
 
