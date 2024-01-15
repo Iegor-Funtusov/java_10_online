@@ -1,15 +1,24 @@
 #include <stdio.h>
 
-namespace hello;
+//namespace hello;
 
 int main()
 {
-    printf("Hello World!\n");
+//    printf("Hello World!\n");
 
-    hello::blabla();
-    test::blabla();
+//    hello::blabla();
+//    test::blabla();
+
+//    int a = 10;
+    int a;
+    printf("%d\n", a);
+
+    if(a = 0)
+    {
+
+    }
 
     return 0;
 }
 
-bool blabla() {}
+//bool blabla() {}
