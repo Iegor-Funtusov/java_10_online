@@ -1,0 +1,32 @@
+<div class="card" *ngIf="students$ | async as students">
+  <div class="card-header">All Students</div>
+  <div class="card-body">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Age</th>
+        <th>Delete</th>
+        <th>Update</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let student of students">
+        <td>{{ student.firstName }}</td>
+        <td>{{ student.lastName }}</td>
+        <td>{{ student.age }}</td>
+        <td>
+          <button class="btn btn-danger btn-sm" (click)="delete(student.id)">delete</button>
+        </td>
+        <td>
+          <a role="button" class="btn btn-info btn-sm" routerLink="/students/{{student.id}}/update">update</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer">
+    <a role="button" routerLink="/students/new" class="btn btn-primary">New Student</a>
+  </div>
+</div>
