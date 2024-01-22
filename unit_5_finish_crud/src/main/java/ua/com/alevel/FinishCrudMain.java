@@ -1,6 +1,7 @@
 package ua.com.alevel;
 
 
+import ua.com.alevel.entity.BaseEntity;
 import ua.com.alevel.entity.Group;
 import ua.com.alevel.entity.Student;
 import ua.com.alevel.service.GroupService;
@@ -14,6 +15,19 @@ import java.util.List;
 public class FinishCrudMain {
 
     public static void main(String[] args) throws IOException {
+
+        Object[] some = new Object[10];
+        some[0] = new Student();
+        some[1] = new Group();
+        some[2] = new GroupService();
+
+        // дерево є дуб = false
+        // дуб є дерево = true
+
+        // BaseEntity is student = false
+        // student is BaseEntity = true
+
+
         GroupService groupService = new GroupService();
         StudentService studentService = new StudentService();
 

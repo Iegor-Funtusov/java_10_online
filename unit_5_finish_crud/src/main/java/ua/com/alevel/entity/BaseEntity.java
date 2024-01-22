@@ -1,6 +1,6 @@
 package ua.com.alevel.entity;
 
-public abstract class BaseEntity {
+public abstract class BaseEntity extends Object {
 
     private String id;
 
