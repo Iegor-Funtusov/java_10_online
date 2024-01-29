@@ -23,6 +23,10 @@ public class MathSumTest {
         MathSum impl3 = (a, b) -> a + b; // lambda
         this.sum(impl3);
 
+        BlaBlaBla blaBlaBla = (s, a, sa) -> {
+            System.out.println("a = " + a);
+            };
+
     }
 
     private void sum(MathSum mathSum) {
