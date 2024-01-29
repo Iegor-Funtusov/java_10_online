@@ -2,14 +2,21 @@ package ua.com.alevel.set;
 
 import ua.com.alevel.Student;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class SetTest {
 
     Set<Student> hashSet = new HashSet<>();
     Set<Student> linkedHashSet = new LinkedHashSet<>();
-//    Set<Student> hashSet = new TreeSet<>();
+    Set<Student> treeSet = new TreeSet<>();
+
+    Map<Student, String> hm = new HashMap<>();
+
+    public void test() {
+        hm.keySet();
+
+        hashSet.add(new Student());
+        // ->
+        hm.put(new Student(), null);
+    }
 }

@@ -2,6 +2,7 @@ package ua.com.alevel;
 
 import java.util.Objects;
 
+//public class Student implements Comparable<Student> {
 public class Student {
 
     private String id;
@@ -58,4 +59,22 @@ public class Student {
                 ", age=" + age +
                 '}';
     }
+
+//    @Override
+//    public int compareTo(Student o) {
+//        int compareByAge = 0;
+//        if (this.age > o.age) {
+//            compareByAge = 1;
+//        } else if (this.age == o.age) {
+//            compareByAge = 0;
+//        } else {
+//            compareByAge = -1;
+//        }
+//
+//        if (compareByAge == 0) {
+//            return this.name.compareTo(o.name);
+//        }
+//
+//        return compareByAge;
+//    }
 }
