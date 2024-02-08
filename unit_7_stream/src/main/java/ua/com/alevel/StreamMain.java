@@ -53,6 +53,7 @@ public class StreamMain {
 //
 //        System.out.println("student = " + student);
 
-        new StreamTest().test();
+//        new StreamTest().test();
+        new LinkedMethod().test();
     }
 }

@@ -73,7 +73,8 @@ public class StreamTest {
         sum = strings
                 .stream()
                 .filter(el -> el.matches("[0-9]*"))
-                .mapToInt(el -> Integer.parseInt(el))
+//                .mapToInt(el -> Integer.parseInt(el))
+                .mapToInt(Integer::parseInt)
                 .distinct()
                 .sum();
         System.out.println("sum = " + sum);
