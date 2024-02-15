@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ua.com.alevel.controller.GroupViewController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <children>
+        <VBox layoutX="26.0" layoutY="22.0" spacing="15.0">
+            <children>
+                <Label text="Id">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label text="Name">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+            </children>
+        </VBox>
+        <VBox layoutY="96.0" layoutX="22.0" prefHeight="130.0" prefWidth="129.0" spacing="10.0">
+            <children>
+                <TextField fx:id="groupIdText"/>
+                <TextField fx:id="groupNameText"/>
+            </children>
+        </VBox>
+        <VBox layoutY="26.0" layoutX="202.0" prefHeight="130.0" prefWidth="129.0" spacing="10.0">
+            <children>
+                <Button fx:id="createGroup" onAction="#create" text="Create"/>
+                <Button fx:id="updateGroup" onAction="#update" text="Update"/>
+                <Button fx:id="deleteGroup" onAction="#delete" text="Delete"/>
+            </children>
+        </VBox>
+        <TableView fx:id="groupTable" layoutY="238.0" layoutX="22.0" prefHeight="210.0" prefWidth="400.0">
+            <columns>
+                <TableColumn fx:id="idColumn" text="Id" prefWidth="35.0"/>
+                <TableColumn fx:id="nameColumn" text="Name" prefWidth="120.0"/>
+            </columns>
+        </TableView>
+    </children>
+</AnchorPane>
