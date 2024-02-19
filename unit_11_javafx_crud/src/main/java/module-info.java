@@ -7,6 +7,8 @@ module ua.com.alevel {
     exports ua.com.alevel;
     exports ua.com.alevel.controller;
     exports ua.com.alevel.entity;
+    exports ua.com.alevel.service;
+    exports ua.com.alevel.db;
 
     opens ua.com.alevel.controller to javafx.fxml;
 }

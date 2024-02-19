@@ -7,14 +7,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import ua.com.alevel.entity.Group;
+import ua.com.alevel.reactiv.NativePubSub;
+import ua.com.alevel.service.GroupService;
+import ua.com.alevel.service.impl.GroupServiceImpl;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.UUID;
 
 public class GroupViewController implements Initializable {
+
+    private final GroupService groupService = new GroupServiceImpl();
 
     @FXML
     private TextField groupIdText;
@@ -40,11 +42,11 @@ public class GroupViewController implements Initializable {
     @FXML
     private TableColumn<Group, String> nameColumn;
 
-    private final ObservableList<Group> groups = FXCollections.observableArrayList();
+    private ObservableList<Group> groups = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        groups.addAll(generate());
+        groups.addAll(groupService.findAll());
         idColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("name"));
         groupTable.setItems(groups);
@@ -58,38 +60,35 @@ public class GroupViewController implements Initializable {
             });
             return row;
         });
+
+        NativePubSub.getInstance().subscribeGroup(this::updateGroups);
     }
 
     public void create() {
-        System.out.println("GroupViewController.create");
         Group group = new Group();
-        group.setId(UUID.randomUUID().toString());
         group.setName(groupNameText.getText());
-        groups.add(group);
+        groupService.create(group);
+        NativePubSub.getInstance().publishGroup(true);
     }
 
     public void update() {
-        System.out.println("GroupViewController.update");
-        Group group = groups.stream().filter(g -> g.getId().equals(groupIdText.getText())).findAny().get();
+        Group group = new Group();
+        group.setId(groupIdText.getText());
         group.setName(groupNameText.getText());
+        groupService.update(group);
+        NativePubSub.getInstance().publishGroup(true);
     }
 
     public void delete() {
-        System.out.println("GroupViewController.delete");
-        groups.removeIf(g -> g.getId().equals(groupIdText.getText()));
+        groupService.delete(groupIdText.getText());
+        NativePubSub.getInstance().publishGroup(true);
     }
 
-    private List<Group> generate() {
-        List<Group> groupList = new ArrayList<>();
-        Group java = new Group();
-        java.setName("JAVA");
-        java.setId(UUID.randomUUID().toString());
-        groupList.add(java);
-
-        Group js = new Group();
-        js.setId(UUID.randomUUID().toString());
-        js.setName("JS");
-        groupList.add(js);
-        return groupList;
+    private void updateGroups(Boolean b) {
+        if (b) {
+            groups = FXCollections.observableArrayList();
+            groups.addAll(groupService.findAll());
+            groupTable.setItems(groups);
+        }
     }
 }
