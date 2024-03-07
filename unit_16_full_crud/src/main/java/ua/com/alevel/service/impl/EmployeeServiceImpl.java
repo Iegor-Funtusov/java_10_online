@@ -51,4 +51,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Collection<Employee> findAllEmployeesByDepartment(Long departmentId) {
         return employeeDao.findAllEmployeesByDepartment(departmentId);
     }
+
+    @Override
+    public Collection<Employee> findAllEmployeesByNotDepartment(Long departmentId) {
+        return employeeDao.findAllEmployeesByNotDepartment(departmentId);
+    }
 }

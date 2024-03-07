@@ -83,6 +83,21 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
+    public Collection<Employee> findAllEmployeesByNotDepartment(Long departmentId) {
+        List<Employee> employees = new ArrayList<>();
+        try(PreparedStatement preparedStatement = jdbcService.getConnection().prepareStatement("select id, first_name, last_name, age from employees where id not in (select id from employees left join dep_emp de on de.emp_id = employees.id where de.dep_id = ?)")) {
+            preparedStatement.setLong(1, departmentId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                employees.add(buildEmployeeByResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            return employees;
+        }
+        return employees;
+    }
+
+    @Override
     public boolean existById(Long id) {
         return false;
     }

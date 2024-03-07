@@ -30,7 +30,8 @@ public class EmployeeController {
         System.out.println("If you want attach employee to department please enter 6");
         System.out.println("If you want detach employee to department please enter 7");
         System.out.println("If you want find all employees by department please enter 8");
-        System.out.println("If you want exit please enter 9");
+        System.out.println("If you want find all employees by not department please enter 9");
+        System.out.println("If you want exit please enter 10");
     }
 
     private void crud(String position, BufferedReader reader) throws IOException {
@@ -43,7 +44,8 @@ public class EmployeeController {
             case "6" -> attachEmployeeToDepartment(reader);
             case "7" -> detachEmployeeToDepartment(reader);
             case "8" -> findAllEmployeesByDepartment(reader);
-            case "9" -> throw new RuntimeException("exit");
+            case "9" -> findAllEmployeesByNotDepartment(reader);
+            case "10" -> throw new RuntimeException("exit");
         }
     }
 
@@ -123,6 +125,13 @@ public class EmployeeController {
         System.out.println("Please enter department id");
         String departmentIdString = reader.readLine();
         employeeService.findAllEmployeesByDepartment(Long.parseLong(departmentIdString))
+                .forEach(System.out::println);
+    }
+
+    private void findAllEmployeesByNotDepartment(BufferedReader reader) throws IOException {
+        System.out.println("Please enter department id");
+        String departmentIdString = reader.readLine();
+        employeeService.findAllEmployeesByNotDepartment(Long.parseLong(departmentIdString))
                 .forEach(System.out::println);
     }
 }
