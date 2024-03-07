@@ -1,0 +1,97 @@
+package ua.com.alevel.dao.impl;
+
+import ua.com.alevel.config.JdbcService;
+import ua.com.alevel.config.ObjectFactory;
+import ua.com.alevel.dao.EmployeeDao;
+import ua.com.alevel.entity.Employee;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.*;
+
+public class EmployeeDaoImpl implements EmployeeDao {
+
+    private final JdbcService jdbcService = ObjectFactory.getInstance().getService(JdbcService.class);
+
+    @Override
+    public void create(Employee entity) {
+        try (
+                PreparedStatement ps = jdbcService.getConnection().prepareStatement("insert into employees values (default, ?, ?, ?)")
+        ) {
+            ps.setString(1, entity.getFirstName());
+            ps.setString(2, entity.getLastName());
+            ps.setInt(3, entity.getAge());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("create not working: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void update(Employee entity) {
+
+    }
+
+    @Override
+    public void delete(Long id) {
+
+    }
+
+    @Override
+    public boolean existById(Long id) {
+        return false;
+    }
+
+    @Override
+    public Optional<Employee> findById(Long id) {
+        try (
+                Statement statement = jdbcService.getConnection().createStatement();
+                ResultSet resultSet = statement.executeQuery("select * from employees where id = " + id)
+        ) {
+            while (resultSet.next()) {
+                return Optional.of(buildEmployeeByResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            System.out.println("findById not working: " + e.getMessage());
+            return Optional.empty();
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Collection<Employee> findAll() {
+        List<Employee> employees = new ArrayList<>();
+        try (
+                Statement statement = jdbcService.getConnection().createStatement();
+                ResultSet resultSet = statement.executeQuery("select * from employees")
+        ) {
+            while (resultSet.next()) {
+                employees.add(buildEmployeeByResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            System.out.println("findAll not working: " + e.getMessage());
+            return Collections.emptyList();
+        }
+        return employees;
+    }
+
+    @Override
+    public long count() {
+        return 0;
+    }
+
+    private Employee buildEmployeeByResultSet(ResultSet resultSet) throws SQLException {
+        Long id = resultSet.getLong("id");
+        String firstName = resultSet.getString("first_name");
+        String lastName = resultSet.getString("last_name");
+        int age = resultSet.getInt("age");
+        Employee employee = new Employee();
+        employee.setId(id);
+        employee.setFirstName(firstName);
+        employee.setLastName(lastName);
+        employee.setAge(age);
+        return employee;
+    }
+}
