@@ -36,4 +36,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Collection<Employee> findAll() {
         return employeeDao.findAll();
     }
+
+    @Override
+    public void attachEmployeeToDepartment(Long employeeId, Long departmentId) {
+        employeeDao.attachEmployeeToDepartment(employeeId, departmentId);
+    }
+
+    @Override
+    public void detachEmployeeToDepartment(Long employeeId, Long departmentId) {
+        employeeDao.detachEmployeeToDepartment(employeeId, departmentId);
+    }
+
+    @Override
+    public Collection<Employee> findAllEmployeesByDepartment(Long departmentId) {
+        return employeeDao.findAllEmployeesByDepartment(departmentId);
+    }
 }

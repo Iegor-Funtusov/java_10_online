@@ -27,7 +27,10 @@ public class EmployeeController {
         System.out.println("If you want show employee by id please enter 3");
         System.out.println("If you want delete by id please enter 4");
         System.out.println("If you want update by id please enter 5");
-        System.out.println("If you want exit please enter 6");
+        System.out.println("If you want attach employee to department please enter 6");
+        System.out.println("If you want detach employee to department please enter 7");
+        System.out.println("If you want find all employees by department please enter 8");
+        System.out.println("If you want exit please enter 9");
     }
 
     private void crud(String position, BufferedReader reader) throws IOException {
@@ -37,7 +40,10 @@ public class EmployeeController {
             case "3" -> readById(reader);
             case "4" -> delete(reader);
             case "5" -> update(reader);
-            case "6" -> throw new RuntimeException("exit");
+            case "6" -> attachEmployeeToDepartment(reader);
+            case "7" -> detachEmployeeToDepartment(reader);
+            case "8" -> findAllEmployeesByDepartment(reader);
+            case "9" -> throw new RuntimeException("exit");
         }
     }
 
@@ -89,5 +95,34 @@ public class EmployeeController {
 
     private void readAll() {
         employeeService.findAll().forEach(System.out::println);
+    }
+
+    private void attachEmployeeToDepartment(BufferedReader reader) throws IOException {
+        System.out.println("Please enter department id");
+        String departmentIdString = reader.readLine();
+        System.out.println("Please enter employee id");
+        String employeeIdString = reader.readLine();
+        employeeService.attachEmployeeToDepartment(
+                Long.parseLong(employeeIdString),
+                Long.parseLong(departmentIdString)
+        );
+    }
+
+    private void detachEmployeeToDepartment(BufferedReader reader) throws IOException {
+        System.out.println("Please enter department id");
+        String departmentIdString = reader.readLine();
+        System.out.println("Please enter employee id");
+        String employeeIdString = reader.readLine();
+        employeeService.detachEmployeeToDepartment(
+                Long.parseLong(employeeIdString),
+                Long.parseLong(departmentIdString)
+        );
+    }
+
+    private void findAllEmployeesByDepartment(BufferedReader reader) throws IOException {
+        System.out.println("Please enter department id");
+        String departmentIdString = reader.readLine();
+        employeeService.findAllEmployeesByDepartment(Long.parseLong(departmentIdString))
+                .forEach(System.out::println);
     }
 }

@@ -40,6 +40,49 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
+    public void attachEmployeeToDepartment(Long employeeId, Long departmentId) {
+        try (
+                PreparedStatement ps = jdbcService.getConnection().prepareStatement("insert into dep_emp values (?, ?)")
+        ) {
+            ps.setLong(1, departmentId);
+            ps.setLong(2, employeeId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("attachEmployeeToDepartment not working: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void detachEmployeeToDepartment(Long employeeId, Long departmentId) {
+        try (
+                PreparedStatement ps = jdbcService.getConnection().prepareStatement("delete from dep_emp where dep_id = ? and emp_id = ?")
+        ) {
+            ps.setLong(1, departmentId);
+            ps.setLong(2, employeeId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("attachEmployeeToDepartment not working: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public Collection<Employee> findAllEmployeesByDepartment(Long departmentId) {
+        List<Employee> employees = new ArrayList<>();
+        try (
+                Statement statement = jdbcService.getConnection().createStatement();
+                ResultSet resultSet = statement.executeQuery("select emp.id, emp.first_name, emp.last_name, emp.age from employees as emp left join dep_emp as de on emp.id = de.emp_id where dep_id = " + departmentId)
+        ) {
+            while (resultSet.next()) {
+                employees.add(buildEmployeeByResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            System.out.println("findAll not working: " + e.getMessage());
+            return Collections.emptyList();
+        }
+        return employees;
+    }
+
+    @Override
     public boolean existById(Long id) {
         return false;
     }

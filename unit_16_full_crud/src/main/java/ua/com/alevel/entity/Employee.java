@@ -37,6 +37,6 @@ public class Employee extends BaseEntity {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
-                "} " + super.toString();
+                "} ";
     }
 }
