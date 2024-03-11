@@ -5,6 +5,7 @@ import ua.com.alevel.config.ObjectFactory;
 import ua.com.alevel.dao.DepartmentDao;
 import ua.com.alevel.entity.Department;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,6 +17,14 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
     @Override
     public void create(Department entity) {
+        try (
+                PreparedStatement ps = jdbcService.getConnection().prepareStatement("insert into departments values (default, ?)")
+        ) {
+            ps.setString(1, entity.getName());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("create not working: " + e.getMessage());
+        }
     }
 
     @Override
