@@ -14,33 +14,45 @@ public class HibernateCrud {
     private final HibernateConfig hibernateConfig = new HibernateConfig();
 
     public void test() {
-//        Student student = generateStudent();
-//        create(student);
+        Student student = generateStudent();
+        create(student);
+//        Session session = hibernateConfig.getSessionFactory().getCurrentSession();
+//        Transaction transaction = session.beginTransaction();
 
-//        Student student = find2(3L);
+//        session.load(Student.class, 1L);
+//        Student student = session.get(Student.class, 1L);
+
+//        System.out.println("student = " + student);
+//        transaction.commit();
+
+//        Student student = find1(1L);
+//        System.out.println("student = " + student);
 //        student.setAge(21);
 //        update1(student);
 
 //        delete1(student);
 //        delete2(student);
 
-        for (Student student : findAll()) {
-            System.out.println("student = " + student);
-        }
+//        for (Student student : findAll()) {
+//            System.out.println("student = " + student);
+//        }
     }
 
     private void create(Student student) {
+        // student transient
         Transaction transaction = null;
-        try {
-            Session session = hibernateConfig.getSessionFactory().getCurrentSession();
+        try (Session session = hibernateConfig.getSessionFactory().getCurrentSession()) {
             transaction = session.beginTransaction();
             session.save(student);
+            // student persist
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
         }
+
+        // after session.close() -> detach
     }
 
     private void update1(Student student) {
@@ -78,7 +90,9 @@ public class HibernateCrud {
         try(Session session = hibernateConfig.getSessionFactory().getCurrentSession()) {
             transaction = session.beginTransaction();
             Student student = session.find(Student.class, id);
+            System.out.println("student = " + student);
             transaction.commit();
+            session.close();
             return student;
         } catch (Exception e) {
             if (transaction != null) {
@@ -154,11 +168,13 @@ public class HibernateCrud {
     }
 
     private Student generateStudent() {
+        // transient
         Student student = new Student();
-        student.setEmail("student3@gmail.com");
+        student.setEmail("student2@gmail.com");
         student.setFirstName("ee");
         student.setLastName("eee");
         student.setAge(20);
+        System.out.println("student = " + student);
         return student;
     }
 }
