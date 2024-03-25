@@ -12,6 +12,7 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.current_session_context_class">org.hibernate.context.internal.ThreadLocalSessionContext</property>
         <property name="hibernate.enable_lazy_load_no_trans">true</property>
+<!--        <property name="hibernate.connection.pool_size">200</property>-->
 
         <mapping class="ua.com.alevel.entity.Department"/>
         <mapping class="ua.com.alevel.entity.Employee"/>

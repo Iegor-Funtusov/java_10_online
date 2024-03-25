@@ -1,0 +1,52 @@
+package ua.com.alevel.service.impl;
+
+import ua.com.alevel.config.ObjectFactory;
+import ua.com.alevel.dao.DataTableRequest;
+import ua.com.alevel.dao.DepartmentDao;
+import ua.com.alevel.dto.DepartmentStatistics;
+import ua.com.alevel.entity.Department;
+import ua.com.alevel.exception.EntityNotFoundException;
+import ua.com.alevel.service.DepartmentService;
+
+import java.util.Collection;
+import java.util.List;
+
+public class DepartmentServiceImpl implements DepartmentService {
+
+    private final DepartmentDao departmentDao = ObjectFactory.getInstance().getService(DepartmentDao.class);
+
+    @Override
+    public void create(Department entity) {
+        departmentDao.create(entity);
+    }
+
+    @Override
+    public void update(Department entity) {
+        departmentDao.update(entity);
+    }
+
+    @Override
+    public void delete(Long id) {
+        departmentDao.delete(id);
+    }
+
+    @Override
+    public Department findById(Long id) {
+        return departmentDao.findById(id).orElseThrow(() -> new EntityNotFoundException("not found"));
+    }
+
+    @Override
+    public Collection<Department> findAll() {
+        return departmentDao.findAll();
+    }
+
+    @Override
+    public Collection<Department> findAll(DataTableRequest request) {
+        return null;
+    }
+
+    @Override
+    public List<DepartmentStatistics> findDepartmentsStatistics() {
+        return departmentDao.findDepartmentsByTypedQuery();
+    }
+}
