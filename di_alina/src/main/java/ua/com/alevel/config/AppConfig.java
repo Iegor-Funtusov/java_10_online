@@ -50,7 +50,7 @@ public class AppConfig {
                 if (field.isAnnotationPresent(Value.class)) {
                     Value valueAnnotation = field.getAnnotation(Value.class);
                     String filedValue = valueAnnotation.filedValue();
-                    final Map<String, String> map = ResourceUtil.getResources(this.getClass().getClassLoader());
+                    final Map<String, String> map = ResourceUtil.getResources(mainClass.getClassLoader());
                     final String value = map.get(filedValue);
                     field.setAccessible(true);
                     try {
@@ -68,7 +68,6 @@ public class AppConfig {
             Method[] methods = bean.getClass().getDeclaredMethods();
             for (Method method : methods) {
                 if (method.isAnnotationPresent(InitMethod.class)) {
-                System.out.println("method = " + method);
                     try {
                         method.setAccessible(true);
                         method.invoke(bean);
