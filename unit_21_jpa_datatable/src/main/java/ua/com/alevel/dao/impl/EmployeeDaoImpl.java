@@ -5,10 +5,11 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.apache.commons.collections4.CollectionUtils;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.apache.commons.collections4.MapUtils;
+
 import ua.com.alevel.config.JpaConfig;
 import ua.com.alevel.config.ObjectFactory;
 import ua.com.alevel.dao.DataTableRequest;
@@ -126,11 +127,31 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public Collection<Employee> findAll(DataTableRequest request) {
+        System.out.println("request = " + request);
         // Criteria API
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
         Root<Employee> from = criteriaQuery.from(Employee.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (MapUtils.isNotEmpty(request.getParameters())) {
+            request.getParameters().forEach((field, value) -> {
+                Predicate predicate = null;
+                switch (field) {
+                    case "firstName" -> predicate = criteriaBuilder.like(from.get(field), value);
+                    case "lastName" -> predicate = criteriaBuilder.like(from.get(field), "%" + value + "%");
+                    case "age" -> predicate = criteriaBuilder.equal(from.get(field), value);
+                }
+
+                if (predicate != null) {
+                    predicates.add(predicate);
+                }
+            });
+        }
+
+        criteriaQuery.where(predicates.toArray(new Predicate[0]));
 
         if (request.getOrderType().equals(OrderType.ASC)) {
             criteriaQuery.orderBy(criteriaBuilder.asc(from.get(request.getColumn())));

@@ -1,5 +1,6 @@
 package ua.com.alevel.controller;
 
+import org.apache.commons.lang3.ObjectUtils;
 import ua.com.alevel.config.ObjectFactory;
 import ua.com.alevel.dao.DataTableRequest;
 import ua.com.alevel.entity.Department;
@@ -9,9 +10,7 @@ import ua.com.alevel.type.OrderType;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class EmployeeController {
 
@@ -64,8 +63,8 @@ public class EmployeeController {
         System.out.println("If you want sort by age please enter 3");
         String fieldNumber = reader.readLine();
         switch (fieldNumber) {
-            case "1" -> request.setColumn("first_name");
-            case "2" -> request.setColumn("last_name");
+            case "1" -> request.setColumn("firstName");
+            case "2" -> request.setColumn("lastName");
             case "3" -> request.setColumn("age");
         }
         System.out.println("If you want order sorting by asc please enter 1");
@@ -81,8 +80,38 @@ public class EmployeeController {
         int page = Integer.parseInt(reader.readLine());
         System.out.println("Please enter reviewed page size (from 1 to ...)");
         int size = Integer.parseInt(reader.readLine());
+
+
         request.setPage(page);
         request.setSize(size);
+
+        System.out.println("If you want filter by first name please enter 1");
+        System.out.println("If you want filter by last name please enter 2");
+        System.out.println("If you want filter by age please enter 3");
+        System.out.println("If you want skip please enter 0");
+
+        fieldNumber = reader.readLine();
+        if (ObjectUtils.notEqual(fieldNumber, "0")) {
+            Map<String, String> parameters = new HashMap<>();
+            switch (fieldNumber) {
+                case "1" -> {
+                    System.out.println("Please enter filter by first name");
+                    String filter = reader.readLine();
+                    parameters.put("firstName", filter);
+                }
+                case "2" -> {
+                    System.out.println("Please enter filter by last name");
+                    String filter = reader.readLine();
+                    parameters.put("lastName", filter);
+                }
+                case "3" -> {
+                    System.out.println("Please enter filter by age");
+                    String filter = reader.readLine();
+                    parameters.put("age", filter);
+                }
+            }
+            request.setParameters(parameters);
+        }
 
         List<Employee> employees = (List<Employee>) employeeService.findAll(request);
         for (int i = 0; i < employees.size(); i++) {
