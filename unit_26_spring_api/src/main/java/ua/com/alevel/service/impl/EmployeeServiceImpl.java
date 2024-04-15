@@ -6,6 +6,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import ua.com.alevel.dto.DataTableRequest;
 import ua.com.alevel.dto.OrderType;
 import ua.com.alevel.entity.Employee;
@@ -16,12 +18,14 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Service
+@Transactional
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
 
     @Override
+    @Transactional(isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
     public void create(Employee entity) {
         employeeRepository.save(entity);
     }
@@ -37,11 +41,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Employee findById(Long id) {
         return employeeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("not found"));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Collection<Employee> findAll() {
         return employeeRepository.findAll();
     }

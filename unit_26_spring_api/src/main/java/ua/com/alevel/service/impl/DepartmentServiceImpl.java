@@ -3,6 +3,7 @@ package ua.com.alevel.service.impl;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.com.alevel.dto.DataTableRequest;
 import ua.com.alevel.dto.DepartmentStatistics;
 import ua.com.alevel.entity.Department;
@@ -13,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
+@Transactional
 public class DepartmentServiceImpl implements DepartmentService {
 
     @Autowired
@@ -34,11 +36,13 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Department findById(Long id) {
         return departmentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("not found"));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Collection<Department> findAll() {
         return departmentRepository.findAll();
     }
