@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/latout}">
+<body>
+
+<div layout:fragment="main_content">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        All employees
+                    </div>
+                    <div>
+                        <a type="button" class="btn btn-primary" th:href="@{/employees/new}">
+                            New employee
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Age</th>
+                        <th>Count of departments</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="employee, pageInfo : ${employees}">
+                        <td th:text="${pageInfo.index}"></td>
+                        <td th:text="${employee.getFirstName()}"></td>
+                        <td th:text="${employee.getLastName()}"></td>
+                        <td th:text="${employee.getAge()}"></td>
+                        <td th:text="${employee.getCountOfDepartments()}"></td>
+                        <td>
+                            <a type="button" class="btn btn-warning" th:href="@{'/employees/update/' + ${employee.getId()}}">
+                                <span class="material-symbols-rounded">reset_wrench</span>
+                            </a>
+                        </td>
+                        <td>
+                            <a type="button" class="btn btn-danger" th:href="@{'/employees/delete/' + ${employee.getId()}}">
+                                <span class="material-symbols-rounded">delete</span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

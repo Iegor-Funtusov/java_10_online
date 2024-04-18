@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/latout}">
+<body>
+
+<div layout:fragment="main_content">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                Attached employees to department
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <td>Name</td>
+                        <td th:text="${department.getName()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Count of employees</td>
+                        <td th:text="${department.getCountOfEmployees()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Employees</td>
+                        <td>
+                            <div class="d-flex flex-column">
+                                <div th:each="employeeName : ${department.getEmployees()}">
+                                    <span th:text="${employeeName}"></span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-header">
+                Non attached employees to department
+            </div>
+            <div class="card-body">
+                <form th:action="@{'/departments/' + ${department.getId()} + '/attach'}" th:object="${attachedEmployeesToDepartment}" method="post">
+                    <p>
+                        <label>Employees:
+                            <input type="checkbox" name="roles"
+                                   th:each="emp : ${nonAttachedEmployees}"
+                                   th:text="${emp.firstName + ' ' + emp.lastName}"
+                                   th:value="${emp.id}"
+                                   th:field="*{employeesId}"
+                            />
+                        </label>
+                    </p>
+                    <button type="submit" class="btn btn-primary">Attach</button>
+                </form>
+<!--                <table class="table table-striped">-->
+<!--                    <thead>-->
+<!--                    <tr>-->
+<!--                        <th>#</th>-->
+<!--                        <th>First name</th>-->
+<!--                        <th>Last name</th>-->
+<!--                        <th>Age</th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody>-->
+<!--                    <tr th:each="employee, pageInfo : ${nonAttachedEmployees}">-->
+<!--                        <td th:text="${pageInfo.index}"></td>-->
+<!--                        <td th:text="${employee.getFirstName()}"></td>-->
+<!--                        <td th:text="${employee.getLastName()}"></td>-->
+<!--                        <td th:text="${employee.getAge()}"></td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                </table>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

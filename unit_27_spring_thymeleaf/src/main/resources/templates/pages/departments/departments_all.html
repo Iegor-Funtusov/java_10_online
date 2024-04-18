@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/latout}">
+<body>
+
+<div layout:fragment="main_content">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                All departments
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Count of employees</th>
+                        <th>Employees</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="department, iter : ${departments}">
+                        <td th:text="${iter.index}"></td>
+                        <td th:text="${department.getName()}"></td>
+                        <td th:text="${department.countOfEmployees}"></td>
+                        <td>
+                            <div class="d-flex flex-column">
+                                <div th:each="employeeName : ${department.getEmployees()}">
+                                    <span th:text="${employeeName}"></span>
+                                </div>
+                                <div>
+                                    <a type="button" class="btn btn-primary" th:href="@{'/departments/' + ${department.getId()} + '/attach'}">
+                                        <span class="material-symbols-rounded">join</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
