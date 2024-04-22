@@ -10,11 +10,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
-public class EmployeeDaoImpl implements EmployeeDao {
+public class EmployeeDaoJdbcImpl implements EmployeeDao {
 
     private final JdbcService jdbcService;
 
-    public EmployeeDaoImpl(JdbcService jdbcService) {
+    public EmployeeDaoJdbcImpl(JdbcService jdbcService) {
         this.jdbcService = jdbcService;
     }
 

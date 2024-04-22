@@ -3,11 +3,19 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="departmentDao" class="ua.com.alevel.dao.impl.DepartmentDaoImpl">
-        <constructor-arg ref="jdbcService"/>
+<!--    <bean id="departmentDao" class="ua.com.alevel.dao.impl.DepartmentDaoJdbcImpl">-->
+<!--        <constructor-arg ref="jdbcService"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="employeeDao" class="ua.com.alevel.dao.impl.EmployeeDaoJdbcImpl">-->
+<!--        <constructor-arg ref="jdbcService"/>-->
+<!--    </bean>-->
+
+    <bean id="departmentDao" class="ua.com.alevel.dao.impl.DepartmentDaoJpaImpl">
+        <constructor-arg ref="hibernateJpaConfig"/>
     </bean>
 
-    <bean id="employeeDao" class="ua.com.alevel.dao.impl.EmployeeDaoImpl">
-        <constructor-arg ref="jdbcService"/>
+    <bean id="employeeDao" class="ua.com.alevel.dao.impl.EmployeeDaoJpaImpl">
+        <constructor-arg ref="hibernateJpaConfig"/>
     </bean>
 </beans>

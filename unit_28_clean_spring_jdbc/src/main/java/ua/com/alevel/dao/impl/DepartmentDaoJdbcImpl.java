@@ -10,11 +10,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
-public class DepartmentDaoImpl implements DepartmentDao {
+public class DepartmentDaoJdbcImpl implements DepartmentDao {
 
     private final JdbcService jdbcService;
 
-    public DepartmentDaoImpl(JdbcService jdbcService) {
+    public DepartmentDaoJdbcImpl(JdbcService jdbcService) {
         this.jdbcService = jdbcService;
     }
 
