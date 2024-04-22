@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="jdbcService" class="ua.com.alevel.service.impl.MysqlJdbcService">
+        <constructor-arg name="driver" value="${jdbc.driver}"/>
+        <constructor-arg name="url" value="${jdbc.url}"/>
+        <constructor-arg name="username" value="${jdbc.username}"/>
+        <constructor-arg name="password" value="${jdbc.password}"/>
+    </bean>
+</beans>
