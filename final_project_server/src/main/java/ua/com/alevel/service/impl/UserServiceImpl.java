@@ -1,11 +1,13 @@
 package ua.com.alevel.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import ua.com.alevel.entity.User;
+import ua.com.alevel.dto.request.DataTableRequest;
+import ua.com.alevel.entity.user.User;
 import ua.com.alevel.exception.EntityNotFoundException;
 import ua.com.alevel.exception.NotValidDataException;
-import ua.com.alevel.repository.UserRepository;
+import ua.com.alevel.repository.user.UserRepository;
 import ua.com.alevel.service.UserService;
 import ua.com.alevel.util.ExceptionUtil;
 import ua.com.alevel.util.ValidatorsUtil;
@@ -25,12 +27,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void update(User entity) {
+
+    }
+
+    @Override
+    public void delete(Long id) {
+
+    }
+
+    @Override
     public User findById(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) {
             throw new EntityNotFoundException(ExceptionUtil.ENTITY_NOT_FOUND);
         }
         return optionalUser.get();
+    }
+
+    @Override
+    public Page<User> findAll(DataTableRequest request) {
+        return null;
     }
 
     private void checkCorrectUser(final User user) {

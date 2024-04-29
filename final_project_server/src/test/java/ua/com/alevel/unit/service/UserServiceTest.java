@@ -6,10 +6,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-import ua.com.alevel.entity.User;
+import ua.com.alevel.entity.user.User;
 import ua.com.alevel.exception.EntityNotFoundException;
 import ua.com.alevel.exception.NotValidDataException;
-import ua.com.alevel.repository.UserRepository;
+import ua.com.alevel.repository.user.UserRepository;
 import ua.com.alevel.service.impl.UserServiceImpl;
 import ua.com.alevel.util.ExceptionUtil;
 
