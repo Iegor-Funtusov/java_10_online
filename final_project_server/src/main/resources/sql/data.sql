@@ -42,7 +42,7 @@ insert into product_images values (12, 'https://tehnokrat.ua/wp-content/uploads/
 insert into product_images values (13, 'https://tehnokrat.ua/wp-content/uploads/2023/01/MBP16-2023-Gray-6.jpg', false);
 insert into product_images values (14, 'https://tehnokrat.ua/wp-content/uploads/2023/01/MBP16-2023-Gray-7.jpg', false);
 
-insert into product_images values (15, 'https://yellow.ua/media/catalog/product/cache/8/image/508x508/9df78eab33525d08d6e5fb8d27136e95/3/0/304045910_3.jpg', true);
+insert into product_images values (15, 'https://avic.com.ua/assets/cache/products/275747/noutbuk-lenovo-thinkpad-p1-gen-5-21dc0017ra-2-1-prod_xl.jpg', true);
 insert into product_images values (16, 'https://lenovo-shop.s3.eu-central-1.amazonaws.com/storage/app/uploads/public/641/c5e/15c/641c5e15c01eb675546105.jpg/NxN.jpeg', false);
 insert into product_images values (17, 'https://lenovo-shop.s3.eu-central-1.amazonaws.com/storage/app/uploads/public/641/c5e/15b/641c5e15b99d9512459579.jpg/NxN.jpeg', false);
 insert into product_images values (18, 'https://lenovo-shop.s3.eu-central-1.amazonaws.com/storage/app/uploads/public/641/c5e/168/641c5e168740e778826009.jpg/NxN.jpeg', false);

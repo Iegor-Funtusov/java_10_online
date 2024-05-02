@@ -8,16 +8,22 @@ import ua.com.alevel.dto.request.ProductRequest;
 import ua.com.alevel.dto.response.DataTableResponse;
 import ua.com.alevel.dto.response.ProductResponse;
 import ua.com.alevel.entity.product.Product;
+import ua.com.alevel.entity.product.ProductVariant;
 import ua.com.alevel.facade.ProductFacade;
 import ua.com.alevel.service.ProductService;
+import ua.com.alevel.service.ProductVariantService;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalDouble;
 
 @Service
 @AllArgsConstructor
 public class ProductFacadeImpl implements ProductFacade {
 
     private final ProductService productService;
+    private final ProductVariantService productVariantService;
 
     @Override
     public void create(ProductRequest request) {
@@ -52,7 +58,28 @@ public class ProductFacadeImpl implements ProductFacade {
         DataTableResponse<ProductResponse> dataTableResponse = new DataTableResponse<>(page);
         dataTableResponse.setSort(request.getSort());
         dataTableResponse.setOrder(request.getOrder());
-        List<ProductResponse> productResponseList = page.getContent().stream().map(ProductResponse::new).toList();
+        List<ProductResponse> productResponseList = page.getContent()
+                .stream()
+                .map(ProductResponse::new)
+                .peek(productResponse -> {
+                    List<ProductVariant> productVariants = productVariantService.findByProductId(productResponse.getId());
+                    OptionalDouble minPrice = productVariants
+                            .stream()
+                            .map(ProductVariant::getPrice)
+                            .mapToDouble(BigDecimal::doubleValue)
+                            .min();
+                    OptionalDouble maxPrice = productVariants
+                            .stream()
+                            .map(ProductVariant::getPrice)
+                            .mapToDouble(BigDecimal::doubleValue)
+                            .max();
+                    productResponse.setMinPrice(minPrice.isPresent() ? String.valueOf(minPrice.getAsDouble()) : "00.00");
+                    productResponse.setMaxPrice(maxPrice.isPresent() ? String.valueOf(maxPrice.getAsDouble()) : "00.00");
+                })
+                .toList();
+
+
+
         dataTableResponse.setItems(productResponseList);
         return dataTableResponse;
     }

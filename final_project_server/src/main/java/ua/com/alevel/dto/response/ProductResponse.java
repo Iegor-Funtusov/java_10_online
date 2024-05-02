@@ -12,14 +12,14 @@ import java.util.Set;
 @Setter
 public class ProductResponse extends ApiResponse {
     private String name;
-    private String description;
     private String productBrand;
     private String productImage;
+    private String minPrice;
+    private String maxPrice;
 
     public ProductResponse(Product product) {
         setId(product.getId());
         this.name = product.getName();
-        this.description = product.getDescription();
         this.productBrand = product.getProductBrand().getBrand();
         Set<ProductImage> productImages = product.getProductImages();
         if (CollectionUtils.isNotEmpty(productImages)) {
