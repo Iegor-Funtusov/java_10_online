@@ -4,17 +4,14 @@
 
 <div class="products-container mt-2" *ngIf="!isLoading">
   <div class="product-item" *ngFor="let product of data?.items">
-    <div class="card">
+    <div class="card" (click)="goToProduct(product.id)">
       <img src="{{ product?.productImage }}" class="card-img-top" alt="...">
       <div class="card-header">
         <h3 class="card-title">{{ product?.productBrand }}</h3>
       </div>
       <div class="card-body">
         <h5 class="card-title">{{ product?.name }}</h5>
-        <div class="d-flex justify-content-between">
-          <div class="p-1">
-            <a href="#" class="btn btn-primary">Buy</a>
-          </div>
+        <div class="d-flex justify-content-center">
           <div class="p-1">
             {{ product?.minPrice }} ... {{ product?.maxPrice }}
           </div>

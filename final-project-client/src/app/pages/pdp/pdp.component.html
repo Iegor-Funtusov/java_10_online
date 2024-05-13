@@ -1,1 +1,186 @@
-<p>pdp works!</p>
+<div class="spinner-border mt-4" role="status" *ngIf="isLoading">
+  <span class="visually-hidden">Loading...</span>
+</div>
+
+<div class="container mb-4 mt-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-center mb-2">
+        <h1>{{ product?.productBrand }}</h1>
+      </div>
+      <div class="d-flex justify-content-center mb-2">
+        <h2>{{ product?.name }}</h2>
+      </div>
+      <div class="d-flex justify-content-center mb-2">
+        <div class="card" style="width: 18rem;" *ngFor="let image of product?.images">
+          <img src="{{ image }}" class="card-img-top" alt="...">
+        </div>
+      </div>
+      <div class="d-flex justify-content-center">
+        <span>{{ product?.description }}</span>
+      </div>
+      <div class="d-flex justify-content-center">
+        <div class="card">
+          <div class="card-body">
+            <span class="p-1">depth: {{ product?.depth }}</span>
+            <span class="p-1">height: {{ product?.height }}</span>
+            <span class="p-1">weight: {{ product?.weight }}</span>
+            <span class="p-1">width: {{ product?.width }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 mt-5">
+      <div class="d-flex justify-content-center">
+        <h2>Please select your variant</h2>
+      </div>
+      <div class="d-flex justify-content-center">
+        <div class="card mt-2 w-100">
+          <div class="card-header">
+            Please select os type
+          </div>
+          <div class="card-body">
+            <ng-container *ngFor="let os of variants.os">
+              <button
+                type="button"
+                class="btn btn-light m-1"
+                [class.active]="variantForm.controls['os'].value === os"
+                (click)="selectVariant('os', os)">{{ os }}</button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <div class="card mt-2 w-100">
+          <div class="card-header">
+            Please select cpu type
+          </div>
+          <div class="card-body">
+            <ng-container *ngFor="let cpu of variants.cpu">
+              <button
+                type="button"
+                class="btn btn-light m-1"
+                [class.active]="variantForm.controls['cpu'].value === cpu"
+                (click)="selectVariant('cpu', cpu)">{{ cpu }}</button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <div class="card mt-2 w-100">
+          <div class="card-header">
+            Please select ram type
+          </div>
+          <div class="card-body">
+            <ng-container *ngFor="let ram of variants.ram">
+              <button
+                type="button"
+                class="btn btn-light m-1"
+                [class.active]="variantForm.controls['ram'].value === ram"
+                (click)="selectVariant('ram', ram)">{{ ram }}</button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <div class="card mt-2 w-100">
+          <div class="card-header">
+            Please select ssd type
+          </div>
+          <div class="card-body">
+            <ng-container *ngFor="let ssd of variants.ssd">
+              <button
+                type="button"
+                class="btn btn-light m-1"
+                [class.active]="variantForm.controls['ssd'].value === ssd"
+                (click)="selectVariant('ssd', ssd)">{{ ssd }}</button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <div class="card mt-2 w-100">
+          <div class="card-header">
+            Please select color type
+          </div>
+          <div class="card-body">
+            <ng-container *ngFor="let color of variants.color">
+              <button
+                type="button"
+                class="btn btn-light m-1"
+                [class.active]="variantForm.controls['color'].value === color"
+                (click)="selectVariant('color', color)">{{ color }}</button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <div class="card mt-2 w-100">
+          <div class="card-header">
+            Please select battery type
+          </div>
+          <div class="card-body">
+            <ng-container *ngFor="let battery of variants.battery">
+              <button
+                type="button"
+                class="btn btn-light m-1"
+                [class.active]="variantForm.controls['battery'].value === battery"
+                (click)="selectVariant('battery', battery)">{{ battery }}</button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <div class="card mt-2 w-100">
+          <div class="card-header">
+            Please select battery type
+          </div>
+          <div class="card-body">
+            <ng-container *ngFor="let camera of variants.camera">
+              <button
+                type="button"
+                class="btn btn-light m-1"
+                [class.active]="variantForm.controls['camera'].value === camera"
+                (click)="selectVariant('camera', camera)">{{ camera }}</button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <div class="card mt-2 w-100">
+          <div class="card-header">
+            Please select battery type
+          </div>
+          <div class="card-body">
+            <ng-container *ngFor="let wireless of variants.wireless">
+              <button
+                type="button"
+                class="btn btn-light m-1"
+                [class.active]="variantForm.controls['wireless'].value === wireless"
+                (click)="selectVariant('wireless', wireless)">{{ wireless }}</button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-12 mt-5 mb-5">
+      <div class="justify-content-between">
+        <div class="p-1">
+          <button type="button" class="btn btn-primary" [class.disabled]="!variantForm.valid">Buy</button>
+        </div>
+        <div class="p-1">
+          Price: {{ variant ? variant.price : 'select a variant' }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
