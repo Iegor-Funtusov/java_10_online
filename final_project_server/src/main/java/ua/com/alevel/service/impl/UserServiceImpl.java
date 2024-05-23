@@ -2,7 +2,6 @@ package ua.com.alevel.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.com.alevel.dto.request.DataTableRequest;
 import ua.com.alevel.entity.user.User;
@@ -20,12 +19,10 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void create(User entity) {
         checkCorrectUser(entity);
-        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
         userRepository.save(entity);
     }
 
