@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NgForOf, NgIf } from "@angular/common";
+import { ActivatedRoute, Router } from "@angular/router";
+import { FormBuilder, FormControl, Validators } from "@angular/forms";
+import { map } from "rxjs";
+
 import { ProductService } from "../../services/product.service";
 import { PdpData } from "../../models/pdp.data";
-import {NgForOf, NgIf} from "@angular/common";
-import {Router} from "@angular/router";
-import {ProductVariantData} from "../../models/product-variant.data";
-import {FormBuilder, FormControl, Validators} from "@angular/forms";
+import { ProductVariantData } from "../../models/product-variant.data";
 
 interface ProductVariantList {
   os: string[];
@@ -59,6 +61,7 @@ export class PdpComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
     private productService: ProductService,
   ) {
   }
@@ -74,6 +77,22 @@ export class PdpComponent implements OnInit {
           this.initVariants(product.variants);
           this.isLoading = false;
         });
+      this.route.queryParamMap
+        .pipe(
+          map(map => map['params'])
+        )
+        .subscribe(params => {
+          if (params) {
+            const cpu = params?.cpu;
+            const os = params?.os;
+            if (cpu) {
+              this.variantForm.controls['cpu'].setValue(cpu);
+            }
+            if (os) {
+              this.variantForm.controls['os'].setValue(os);
+            }
+          }
+      })
     }
 
     this.variantForm.statusChanges.subscribe(status => {

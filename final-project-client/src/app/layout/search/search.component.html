@@ -1,0 +1,20 @@
+<ng-container *ngIf="{ searchResult: searchResult$ | async } as config">
+  <form class="d-flex" [formGroup]="searchForm">
+    <div class="d-flex dropdown">
+      <input
+        class="form-control me-2 dropdown-toggle"
+        type="search"
+        formControlName="query"
+        placeholder="Search"
+        data-bs-toggle="dropdown"
+        aria-label="Search">
+      <ng-container>
+        <ul class="dropdown-menu">
+          <li *ngFor="let product of config.searchResult" class="p-2" (click)="navigateToProduct(product)">
+            {{ product.productInfo }}
+          </li>
+        </ul>
+      </ng-container>
+    </div>
+  </form>
+</ng-container>

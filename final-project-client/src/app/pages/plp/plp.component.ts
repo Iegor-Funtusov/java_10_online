@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForOf, NgIf } from "@angular/common";
+import { Router } from "@angular/router";
+
 import { ProductService } from "../../services/product.service";
-import {NgForOf, NgIf} from "@angular/common";
-import {DataTableResponseData} from "../../models/data-table-response.data";
-import {PlpData} from "../../models/plp.data";
-import {Router} from "@angular/router";
+import { DataTableResponseData } from "../../models/data-table-response.data";
+import { PlpData } from "../../models/plp.data";
 
 @Component({
   selector: 'app-plp',

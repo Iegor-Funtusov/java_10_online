@@ -6,12 +6,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ua.com.alevel.entity.user.RoleUser;
 import ua.com.alevel.entity.user.User;
 import ua.com.alevel.service.JwtService;
 import ua.com.alevel.service.UserService;
 
+@EnableScheduling
 @SpringBootApplication
 @AllArgsConstructor
 public class FinalProjectServerApplication {
