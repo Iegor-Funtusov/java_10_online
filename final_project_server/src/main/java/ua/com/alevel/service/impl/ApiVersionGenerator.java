@@ -1,5 +1,6 @@
 package ua.com.alevel.service.impl;
 
+//import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.com.alevel.config.processor.annotations.InitMethod;
@@ -17,6 +18,7 @@ public class ApiVersionGenerator {
 
     private final ApiVersionRepository apiVersionRepository;
 
+//    @PostConstruct
     @InitMethod
     public void generate() {
         List<ApiVersion> apiVersions = apiVersionRepository.findAll();
