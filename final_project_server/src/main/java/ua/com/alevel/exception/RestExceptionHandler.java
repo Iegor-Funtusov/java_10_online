@@ -30,6 +30,12 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler
+    public ResponseEntity<?> handleInvalidApiVersionException(InvalidApiVersionException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                new ErrorContainer(Collections.singletonList(exception.getMessage())));
+    }
+
+    @ExceptionHandler
     public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
         List<String> errors = exception.getAllErrors()
                 .stream()
