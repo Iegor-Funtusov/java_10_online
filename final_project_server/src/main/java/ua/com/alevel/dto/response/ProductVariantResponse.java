@@ -6,7 +6,7 @@ import ua.com.alevel.entity.product.ProductVariant;
 
 @Getter
 @Setter
-public class ProductVariantResponse extends ApiResponse {
+public class ProductVariantResponse extends ApiResponse<Long> {
 
     private String os;
     private String cpu;

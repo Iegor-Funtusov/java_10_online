@@ -7,7 +7,7 @@ import ua.com.alevel.type.DisplayType;
 
 @Getter
 @Setter
-public class ProductDisplayResponse extends ApiResponse {
+public class ProductDisplayResponse extends ApiResponse<Long> {
 
     private String displayResolution;
     private String displayType;

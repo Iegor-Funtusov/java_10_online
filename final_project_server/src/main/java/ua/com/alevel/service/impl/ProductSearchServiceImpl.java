@@ -11,7 +11,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ProductSearchServiceImpl implements ProductSearchService {
+
     private final ProductIndexRepository productIndexRepository;
+
     @Override
     public List<ProductIndex> searchProducts(String searchText) {
         return productIndexRepository.findAllByProductInfoContainingIgnoreCase(searchText);

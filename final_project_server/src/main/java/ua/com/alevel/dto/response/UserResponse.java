@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserResponse extends ApiResponse {
+public class UserResponse extends ApiResponse<Long> {
 
     private String firstName;
     private String lastName;

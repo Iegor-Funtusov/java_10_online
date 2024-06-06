@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class ProductResponse extends ApiResponse {
+public class ProductResponse extends ApiResponse<Long> {
     private String name;
     private String productBrand;
     private String productImage;

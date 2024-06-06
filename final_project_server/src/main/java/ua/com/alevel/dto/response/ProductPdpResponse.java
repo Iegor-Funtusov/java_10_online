@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class ProductPdpResponse extends ApiResponse {
+public class ProductPdpResponse extends ApiResponse<Long> {
 
     private String name;
     private String description;

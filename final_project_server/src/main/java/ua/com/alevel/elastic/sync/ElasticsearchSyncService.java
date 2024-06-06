@@ -2,15 +2,22 @@ package ua.com.alevel.elastic.sync;
 
 import lombok.AllArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.IterableUtils;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ua.com.alevel.elastic.document.ProductIndex;
+import ua.com.alevel.elastic.document.QuerySearch;
 import ua.com.alevel.elastic.repository.ProductIndexRepository;
+import ua.com.alevel.elastic.repository.QuerySearchRepository;
 import ua.com.alevel.repository.data.ProductSearchDto;
 import ua.com.alevel.repository.product.ProductVariantRepository;
+import ua.com.alevel.store.SavedQuery;
+import ua.com.alevel.store.SavedQueryRepository;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 @Service
 @AllArgsConstructor
@@ -18,8 +25,10 @@ public class ElasticsearchSyncService {
 
     private final ProductVariantRepository productVariantRepository;
     private final ProductIndexRepository productIndexRepository;
+    private final QuerySearchRepository querySearchRepository;
+    private final SavedQueryRepository savedQueryRepository;
 
-    @Scheduled(cron = "*/10 * * * * *")
+    @Scheduled(cron = "*/30 * * * * *")
     public void sync() {
         System.out.println("ElasticsearchSyncService.sync");
         productIndexRepository.deleteAll();
@@ -28,6 +37,18 @@ public class ElasticsearchSyncService {
             System.out.println("indexList = " + indexList.size());
             productIndexRepository.saveAll(getProductIndexes());
         }
+    }
+
+    @Scheduled(cron = "*/10 * * * * *")
+    public void findAllQuerySearchAndMoveToMongo() {
+        Iterable<QuerySearch> querySearchCollection = querySearchRepository.findAll();
+        Set<String> querySearches = IterableUtils.toList(querySearchCollection)
+                .stream()
+                .map(QuerySearch::getQuery)
+                .collect(Collectors.toSet());
+        List<SavedQuery> savedQueries = querySearches.stream().map(SavedQuery::new).toList();
+        savedQueryRepository.saveAll(savedQueries);
+        querySearchRepository.deleteAll();
     }
 
     private List<ProductIndex> getProductIndexes() {

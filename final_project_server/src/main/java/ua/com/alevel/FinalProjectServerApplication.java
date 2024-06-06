@@ -13,7 +13,7 @@ import ua.com.alevel.entity.user.User;
 import ua.com.alevel.service.JwtService;
 import ua.com.alevel.service.UserService;
 
-//@EnableScheduling
+@EnableScheduling
 @SpringBootApplication
 @AllArgsConstructor
 public class FinalProjectServerApplication {

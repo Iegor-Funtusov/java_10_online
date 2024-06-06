@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class ApiResponse {
-    private Long id;
+public abstract class ApiResponse<ID> {
+    private ID id;
 }
