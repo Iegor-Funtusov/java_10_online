@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="col mt-4">
+      <div class="card">
+        <div class="card-header">
+          Stock indexes
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Current value</th>
+              <th scope="col">Max value</th>
+              <th scope="col">Min value</th>
+              <th scope="col">Up</th>
+              <th scope="col">Dawn</th>
+              <th scope="col">Nothing</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let el of data | async; let i = index">
+              <td>{{ i }}</td>
+              <td>{{ el.name }}</td>
+              <td>{{ el.currentValue }}</td>
+              <td>{{ el.maxValue }}</td>
+              <td>{{ el.minValue }}</td>
+              <td>{{ el.isUp }}</td>
+              <td>{{ el.isDown }}</td>
+              <td>{{ el.isNever }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
