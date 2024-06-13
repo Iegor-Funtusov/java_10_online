@@ -3,12 +3,15 @@ package ua.com.alevel.elastic.sync;
 import lombok.AllArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.IterableUtils;
+
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ua.com.alevel.elastic.document.ProductIndex;
 import ua.com.alevel.elastic.document.QuerySearch;
 import ua.com.alevel.elastic.repository.ProductIndexRepository;
 import ua.com.alevel.elastic.repository.QuerySearchRepository;
+import ua.com.alevel.logger.LoggerLevel;
+import ua.com.alevel.logger.LoggerService;
 import ua.com.alevel.repository.data.ProductSearchDto;
 import ua.com.alevel.repository.product.ProductVariantRepository;
 import ua.com.alevel.store.SavedQuery;
@@ -16,8 +19,6 @@ import ua.com.alevel.store.SavedQueryRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 @Service
 @AllArgsConstructor
@@ -27,6 +28,7 @@ public class ElasticsearchSyncService {
     private final ProductIndexRepository productIndexRepository;
     private final QuerySearchRepository querySearchRepository;
     private final SavedQueryRepository savedQueryRepository;
+    private final LoggerService loggerService;
 
     @Scheduled(cron = "*/30 * * * * *")
     public void sync() {
@@ -34,7 +36,7 @@ public class ElasticsearchSyncService {
         productIndexRepository.deleteAll();
         List<ProductIndex> indexList = getProductIndexes();
         if (CollectionUtils.isNotEmpty(indexList)) {
-            System.out.println("indexList = " + indexList.size());
+            loggerService.log(LoggerLevel.INFO, "indexList size: " + indexList.size());
             productIndexRepository.saveAll(getProductIndexes());
         }
     }
