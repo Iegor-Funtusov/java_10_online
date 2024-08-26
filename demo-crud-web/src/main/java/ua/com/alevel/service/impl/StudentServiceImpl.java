@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.alevel.entity.Student;
+import ua.com.alevel.exception.EntityNotFoundException;
 import ua.com.alevel.repository.StudentRepository;
 import ua.com.alevel.service.StudentService;
 
@@ -39,6 +40,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student findById(Long id) {
+        checkExist(id);
         return getById(id);
     }
 
@@ -49,7 +51,7 @@ public class StudentServiceImpl implements StudentService {
 
     private void checkExist(Long id) {
         if (!studentRepository.existsById(id)) {
-            throw new RuntimeException("Student not found");
+            throw new EntityNotFoundException("Student not found");
         }
     }
 
